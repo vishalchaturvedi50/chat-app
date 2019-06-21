@@ -1,3 +1,8 @@
-<p>
-  friends works!
-</p>
+<app-userinfo [user]="appService.currentUser"></app-userinfo>
+
+<ul (click)="onUserItemClickFn($event)">
+  <li [id]="'user'+item.id" *ngFor="let item of friendList">
+    <img [src]="appService.getImagePathFn(item.id)" />
+    <h3>{{item.userName}}</h3>
+  </li>
+</ul>

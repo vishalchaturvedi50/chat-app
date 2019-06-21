@@ -8,13 +8,15 @@ import { FriendsComponent } from './friends/friends.component';
 import { MessageviewerComponent } from './messageviewer/messageviewer.component';
 import { AppService } from './services/app.service';
 import { IndexedDBStorageService } from './services/indexeddb.service';
+import { UserinfoComponent } from './userinfo/userinfo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FriendsComponent,
-    MessageviewerComponent
+    MessageviewerComponent,
+    UserinfoComponent
   ],
   imports: [
     BrowserModule

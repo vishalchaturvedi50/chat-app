@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  width: 100%;
+  li {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    img {
+      max-height: 3em;
+    }
+  }
+  li:hover {
+    background: white;
+    cursor: pointer;
+  }
+}

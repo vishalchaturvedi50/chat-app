@@ -9,5 +9,5 @@ import { IndexedDBStorageService } from './services/indexeddb.service';
 })
 export class AppComponent {
   title = 'chat-app';
-  constructor(private webSocket: WebSocketService, private wee: IndexedDBStorageService) { }
+  constructor() { }
 }

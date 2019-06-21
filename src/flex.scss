@@ -1,0 +1,58 @@
+/* FLEX CLASSES */
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex--row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex--col {
+  display: flex;
+  flex-direction: column;
+}
+
+.align-items-flex-start {
+  align-items: flex-start;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-flex-start {
+  justify-content: flex-start;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+/* PADDING CLASSES */
+
+.u-p_1 {
+  padding: 1em;
+}
+
+.u-p_pt-5 {
+  padding: 0.5em;
+}
+
+.u-p_pt-25 {
+  padding: 0.25em;
+}
+
+/* Margin CLASSES */
+
+.u-m_1 {
+  margin: 1em;
+}
+
+.u-m_pt5 {
+  margin: 0.5em;
+}
+
+.u-m_pt25 {
+  margin: 0.25em;
+}

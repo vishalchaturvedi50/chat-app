@@ -1,0 +1,23 @@
+@import "../common";
+
+.parent-div {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  width: 90%;
+  background-color: $secondary-bg-color;
+}
+
+app-header {
+  width: 100%;
+}
+
+app-friends {
+  width: 30%;
+  height: 100%;
+}
+
+app-messageviewer {
+  width: 70%;
+  height: 100%;
+}

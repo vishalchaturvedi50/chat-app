@@ -1,1 +1,42 @@
+@import "flex.scss";
+@import "common";
 /* You can add global styles to this file, and also import other style files */
+
+/* PADDINGS */
+body {
+  margin: 0;
+  background: $primary-color;
+  font-family: "Roboto", sans-serif;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
+}
+
+
+/* CUSTOM SCROLL BAR */
+/* width */
+::-webkit-scrollbar {
+  width: 0.25em;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-color;
+}

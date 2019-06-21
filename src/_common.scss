@@ -1,0 +1,12 @@
+$primary-color: #00bfa5;
+$secondary-bg-color: #f5fcff;
+$white: #eeeeee;
+$current-user-bg: #009688;
+
+/* A mixing to generate few properties for flexbox */
+@mixin flex-box($flexDirection, $alignItems, $justifyContent) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+}
