@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AppService } from '../services/app.service';
 import { ChatMessage } from '../models/message';
 import { UserService } from '../services/user.service';
@@ -9,6 +9,9 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./messageviewer.component.scss']
 })
 export class MessageviewerComponent implements OnInit {
+
+  @ViewChild('messageListElem') messageListUlElement: ElementRef;
+
 
   public currentMessage: string = "";
 
@@ -23,11 +26,14 @@ export class MessageviewerComponent implements OnInit {
 
   subscribeToMessageListFn() {
     this.appService.currentMessageListSubs.subscribe((msgList: Array<ChatMessage>) => {
+      
       this.messageList = msgList;
+      this.scrollToBottomFn();
     });
 
     this.appService.realTimeMessageSubs.subscribe((msg: ChatMessage) => {
       this.messageList.push(msg);
+      this.scrollToBottomFn();
     })
   }
 
@@ -37,4 +43,16 @@ export class MessageviewerComponent implements OnInit {
     this.currentMessage = "";
   }
 
+  trackMessageListFn(index, item) {
+    if (item)
+      return item.id;
+  }
+
+
+  scrollToBottomFn() {
+     setTimeout(() => {
+       let element: HTMLElement = this.messageListUlElement.nativeElement;
+       element.scrollTo(element.scrollHeight, element.scrollHeight);
+     })
+  }
 }

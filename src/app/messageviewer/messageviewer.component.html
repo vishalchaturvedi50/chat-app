@@ -1,15 +1,17 @@
 <app-userinfo [user]="userService.currentChatUser"></app-userinfo>
 
 
-<ul>
-    <li *ngFor="let item of messageList" [ngClass]="item.from==userService.currentUser.id?'span-right':'span-left'">
+<ul #messageListElem>
+    <li *ngFor="let item of messageList; trackBy:trackMessageListFn"
+        [ngClass]="item.from==userService.currentUser.id?'span-right':'span-left'">
 
         <span> <img [src]="userService.getImagePathFn(item.from)" /> <span>
                 {{item.message}}</span></span></li>
 </ul>
 
 
-<div class="u-p_pt-5 flex--row">
-    <input class="u-p_pt-25" type="text" [(ngModel)]="currentMessage" placeholder="Type your message here" />
-    <button (click)="sendMessageFn()">Send message</button>
-</div>
+<form class="u-p_pt-5 flex--row">
+    <input class="u-p_pt-25" type="text" name="currentMessage" [(ngModel)]="currentMessage"
+        placeholder="Type your message here" />
+    <button type="submit" (click)="sendMessageFn()">Send message</button>
+</form>

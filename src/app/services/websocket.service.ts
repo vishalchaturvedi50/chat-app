@@ -46,7 +46,10 @@ export class WebSocketService {
      */
     sendMessageFn(message: ChatMessage) {
         this.socket.send(JSON.stringify(message));
-        this.realTimeMessageSubject.next(message);
+        this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
+            this.realTimeMessageSubject.next(message);
+        };
+
     }
 
     /**
@@ -56,12 +59,9 @@ export class WebSocketService {
     onMessageFn(ev: any) {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
-        this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
-            console.log("DATA SAVED");
-            if (message.from == this.userService.currentUser.id ||
-                message.to == this.userService.currentUser.id)
-                this.realTimeMessageSubject.next(message);
-        }
+        if (message.from == this.userService.currentUser.id ||
+            message.to == this.userService.currentUser.id)
+            this.realTimeMessageSubject.next(message);
     }
 
     /**
