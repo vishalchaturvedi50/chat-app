@@ -6,6 +6,8 @@ import { WebSocketService } from './services/websocket.service';
 import { HeaderComponent } from './header/header.component';
 import { FriendsComponent } from './friends/friends.component';
 import { MessageviewerComponent } from './messageviewer/messageviewer.component';
+import { AppService } from './services/app.service';
+import { IndexedDBStorageService } from './services/indexeddb.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,7 @@ import { MessageviewerComponent } from './messageviewer/messageviewer.component'
   imports: [
     BrowserModule
   ],
-  providers: [WebSocketService],
+  providers: [WebSocketService, AppService, IndexedDBStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
