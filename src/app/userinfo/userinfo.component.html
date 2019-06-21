@@ -1,5 +1,5 @@
 <div class="current-user-info flex--row">
-  <img [src]="appService.getImagePathFn(user.id)" />
+  <img [src]="userService.getImagePathFn(user.id)" />
   <div>
     <h3>{{user.userName}}</h3>
     <h5>{{user.labels}}</h5>

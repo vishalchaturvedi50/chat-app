@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { ChatMessage } from '../models/message';
 import { IndexedDBStorageService } from './indexeddb.service';
+import { AppService } from './app.service';
+import { Subject } from 'rxjs';
+import { UserService } from './user.service';
 @Injectable()
 export class WebSocketService {
 
-    private webSocketUri: string = "wss://echo.websocket.org";
+    private webSocketUri: string = "wss://connect.websocket.in/web-chat-app-xyz12";
 
     private socket: WebSocket;
 
-    constructor(private indexedDbService: IndexedDBStorageService) {
+    public realTimeMessageSubject: Subject<ChatMessage> = new Subject();
+
+    constructor(private indexedDbService: IndexedDBStorageService,
+        private userService: UserService) {
         this.connectFn();
         this.socket.onopen = this.onConnectionOpenFn;
         this.socket.onmessage = (ev) => {
@@ -40,6 +46,7 @@ export class WebSocketService {
      */
     sendMessageFn(message: ChatMessage) {
         this.socket.send(JSON.stringify(message));
+        this.realTimeMessageSubject.next(message);
     }
 
     /**
@@ -51,6 +58,9 @@ export class WebSocketService {
         let message: ChatMessage = JSON.parse(ev.data);
         this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
             console.log("DATA SAVED");
+            if (message.from == this.userService.currentUser.id ||
+                message.to == this.userService.currentChatUser.id)
+                this.realTimeMessageSubject.next(message);
         }
     }
 

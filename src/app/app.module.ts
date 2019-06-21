@@ -9,6 +9,8 @@ import { MessageviewerComponent } from './messageviewer/messageviewer.component'
 import { AppService } from './services/app.service';
 import { IndexedDBStorageService } from './services/indexeddb.service';
 import { UserinfoComponent } from './userinfo/userinfo.component';
+import { FormsModule } from "@angular/forms";
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,10 @@ import { UserinfoComponent } from './userinfo/userinfo.component';
     UserinfoComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
-  providers: [WebSocketService, AppService, IndexedDBStorageService],
+  providers: [WebSocketService, AppService, IndexedDBStorageService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

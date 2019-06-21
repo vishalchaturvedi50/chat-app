@@ -1,0 +1,33 @@
+@import "../../common";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-container {
+  flex: 1;
+  position: relative;
+  div {
+    width: 100%;
+  }
+  div:last-child {
+    position: absolute;
+    bottom: 0;
+    input {
+      font-size: 1.2em;
+      flex: 1;
+      background: $secondary-bg-color;
+      outline: none;
+      border: none;
+      border-bottom: 2px solid $current-user-bg;
+    }
+    button {
+      background: $current-user-bg;
+      outline: none;
+      border: none;
+      color: white;
+      font-variant: all-petite-caps;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserClass } from '../models/user';
 import { AppService } from '../services/app.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-userinfo',
@@ -12,7 +13,7 @@ export class UserinfoComponent implements OnInit {
 
   @Input() user: UserClass = new UserClass();
 
-  constructor(public appService: AppService) { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
   }

@@ -19,13 +19,18 @@ export class IndexedDBStorageService {
     public getUserMessagesSubject: Subject<Array<ChatMessage>> = new Subject();
 
     constructor() {
-        let db = window.indexedDB.open(this.dbName);
+        this.initializeFn();
+    }
+
+    async initializeFn() {
+        let db = await indexedDB.open(this.dbName);
         db.onsuccess = (ev: any) => {
             console.log("SUCC")
             this.database = ev.target.result;
         }
         db.onupgradeneeded = (ev: any) => {
             console.log("ON UPGRADE");
+            this.database = ev.target.result;
             this.objectStore = this.database.createObjectStore(this.dbStoreName, {
                 keyPath: "id", autoIncrement: true
             });
@@ -48,7 +53,7 @@ export class IndexedDBStorageService {
         return transaction.objectStore(this.dbStoreName).add(data);
     }
 
-    retriveMessageByUserFn(fromName: string, toName: string) {
+    retriveMessageByUserFn(fromName: number, toName: number) {
         let transaction = this.getTransactionFn();
         let listOfMessages: Array<ChatMessage> = [];
         let cursrc = transaction.objectStore(this.dbStoreName).openCursor();
@@ -56,8 +61,8 @@ export class IndexedDBStorageService {
             let cursor: IDBCursor = ev.target.result;
             if (cursor) {
                 let value: ChatMessage = (<any>cursor).value;
-                if (value.from.toLowerCase() == fromName.toLowerCase()
-                    && value.to.toLowerCase() == toName.toLowerCase()) {
+                if (value.from == fromName
+                    && value.to == toName) {
                     listOfMessages.push(value);
                 }
                 cursor.continue();

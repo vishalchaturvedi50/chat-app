@@ -1,1 +1,13 @@
-<app-userinfo [user]="appService.currentChatUser"></app-userinfo>
+<app-userinfo [user]="userService.currentChatUser"></app-userinfo>
+
+<div class="flex--col message-container">
+    <div>
+        <ul>
+            <li *ngFor="let item of messageList">{{item.message}}</li>
+        </ul>
+    </div>
+    <div class="u-p_pt-5 flex--row">
+        <input class="u-p_pt-25" type="text" [(ngModel)]="currentMessage" placeholder="Type your message here" />
+        <button (click)="sendMessageFn()">Send message</button>
+    </div>
+</div>
