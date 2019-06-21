@@ -19,7 +19,6 @@ export class MessageviewerComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeToMessageListFn();
-    setTimeout(() => { this.appService.getMessageListFn(); }, 4000);
   }
 
   subscribeToMessageListFn() {

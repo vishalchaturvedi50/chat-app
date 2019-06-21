@@ -3,3 +3,7 @@ export class UserClass {
     public userName;
     public labels;
 }
+
+export enum UserChangeEnum {
+    CurrentUser, CurrentChatUser
+}

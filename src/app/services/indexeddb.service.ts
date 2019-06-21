@@ -61,8 +61,9 @@ export class IndexedDBStorageService {
             let cursor: IDBCursor = ev.target.result;
             if (cursor) {
                 let value: ChatMessage = (<any>cursor).value;
-                if (value.from == fromName
-                    && value.to == toName) {
+                if ((value.from == fromName
+                    && value.to == toName) || (value.from == toName
+                        && value.to == fromName)) {
                     listOfMessages.push(value);
                 }
                 cursor.continue();

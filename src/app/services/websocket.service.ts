@@ -59,7 +59,7 @@ export class WebSocketService {
         this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
             console.log("DATA SAVED");
             if (message.from == this.userService.currentUser.id ||
-                message.to == this.userService.currentChatUser.id)
+                message.to == this.userService.currentUser.id)
                 this.realTimeMessageSubject.next(message);
         }
     }

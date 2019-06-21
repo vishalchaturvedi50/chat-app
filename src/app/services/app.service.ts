@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WebSocketService } from './websocket.service';
 import { IndexedDBStorageService } from './indexeddb.service';
-import { UserClass } from '../models/user';
+import { UserClass, UserChangeEnum } from '../models/user';
 import { userList, getimgPathFn } from '../models/constant';
 import { ChatMessage } from '../models/message';
 import { Subject } from 'rxjs';
@@ -22,6 +22,7 @@ export class AppService {
         private userService: UserService) {
 
         this.subscribeToMessageListFn();
+        this.subscribeToUserChangeFn();
     }
 
 
@@ -39,9 +40,6 @@ export class AppService {
         })
     }
 
-
-
-
     /**
      * Send message function - responsible for message transfer to websocket
      * @param messageString 
@@ -55,8 +53,16 @@ export class AppService {
         this.webSocketService.sendMessageFn(message);
     }
 
+    subscribeToUserChangeFn() {
+        this.userService.changeInUserSubs.subscribe(resp => {
+            if (resp == UserChangeEnum.CurrentUser) {
 
-
+            }
+            else if (resp == UserChangeEnum.CurrentChatUser) {
+                this.getMessageListFn();
+            }
+        })
+    }
 
 
 }

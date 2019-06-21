@@ -1,18 +1,16 @@
 @import "../../common";
 
 :host {
+  font-weight: 300;
   display: flex;
   flex-direction: column;
-}
-
-.message-container {
   flex: 1;
   position: relative;
   div {
     width: 100%;
   }
   div:last-child {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     input {
       font-size: 1.2em;
@@ -28,6 +26,36 @@
       border: none;
       color: white;
       font-variant: all-petite-caps;
+    }
+  }
+  ul {
+    height: 100%;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    li > span {
+      padding: 0.5em;
+      display: inline-block;
+      border-radius: 2em;
+      margin: 1em;
+      max-width: 60%;
+      display: inline-flex;
+      align-items: center;
+      img {
+        max-height: 2em;
+      }
+    }
+    li.span-right {
+      text-align: right;
+      > span {
+        background: #dcf8c6;
+      }
+    }
+    li.span-left {
+      text-align: left;
+      > span {
+        background: whitesmoke;
+      }
     }
   }
 }
