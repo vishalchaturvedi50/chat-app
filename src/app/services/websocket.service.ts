@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChatMessage } from '../models/message';
 import { IndexedDBStorageService } from './indexeddb.service';
-import { AppService } from './app.service';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';
 @Injectable()
@@ -16,7 +15,7 @@ export class WebSocketService {
     //Subject to send any realtime message
     public realTimeMessageSubject: Subject<ChatMessage> = new Subject();
 
-    constructor(private indexedDbService: IndexedDBStorageService,
+    constructor(public indexedDbService: IndexedDBStorageService,
         private userService: UserService) {
         //Connect Function
         this.connectFn();
@@ -47,7 +46,7 @@ export class WebSocketService {
      */
     sendMessageFn(message: ChatMessage) {
         this.socket.send(JSON.stringify(message));
-        this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
+        this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
             this.realTimeMessageSubject.next(message);
         };
 

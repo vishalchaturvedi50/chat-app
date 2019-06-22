@@ -15,7 +15,6 @@ export class AppService {
     public realTimeMessageSubs: Subject<ChatMessage> = new Subject();
 
     constructor(private webSocketService: WebSocketService,
-        private indexDBService: IndexedDBStorageService,
         private userService: UserService) {
         /* SUBS to message list  and user changes */
         this.subscribeToIndexDbStateFn();
@@ -27,25 +26,28 @@ export class AppService {
      * Get message list for current user and current chat user
      */
     getMessageListFn() {
-        this.indexDBService.retriveMessageByUserFn([this.userService.currentUser.id,
-        this.userService.currentChatUser.id]);
+        this.webSocketService.indexedDbService.
+            retriveMessageByUserFn([this.userService.currentUser.id,
+            this.userService.currentChatUser.id]);
     }
 
     /**
      * Function to subscribe to ready state of DB
      */
     subscribeToIndexDbStateFn() {
-        this.indexDBService.dbReadyStateEmit.subscribe(resp => {
-            this.getMessageListFn();
-        })
+        this.webSocketService.indexedDbService.
+            dbReadyStateEmit.subscribe(() => {
+                this.getMessageListFn();
+            })
     }
     /**
      * Function with subscribtion to user message and real time messages
      */
     subscribeToMessageListFn() {
-        this.indexDBService.getUserMessagesSubject.subscribe((msgList: Array<ChatMessage>) => {
-            this.currentMessageListSubs.next(msgList);
-        })
+        this.webSocketService.indexedDbService
+            .getUserMessagesSubject.subscribe((msgList: Array<ChatMessage>) => {
+                this.currentMessageListSubs.next(msgList);
+            })
         this.webSocketService.realTimeMessageSubject.subscribe((msg: ChatMessage) => {
             this.realTimeMessageSubs.next(msg);
         })
