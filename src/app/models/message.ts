@@ -3,4 +3,5 @@ export class ChatMessage {
     public to: number;
     public id?: number;
     public message: string;
+    public timeStamp: Date;
 }

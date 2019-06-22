@@ -61,7 +61,8 @@ export class AppService {
         let message: ChatMessage = {
             from: this.userService.currentUser.id,
             to: this.userService.currentChatUser.id,
-            message: messageString
+            message: messageString,
+            timeStamp: new Date()
         };
         this.webSocketService.sendMessageFn(message);
     }
