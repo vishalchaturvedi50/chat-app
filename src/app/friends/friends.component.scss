@@ -13,12 +13,18 @@
   .user-list-item {
     @include flex-box(inline-flex, row, center, unset);
     width: inherit;
+    cursor: pointer;
+    border-bottom: 1px solid $grey-shd;
     .user-list-item-img {
       max-height: $img-height-md;
     }
   }
   .user-list-item:hover {
-    background: $white;
-    cursor: pointer;
+    background: $chat-message-bg-trans;
+  }
+  .user-list-item-active,
+  .user-list-item-active:hover {
+    background: $chat-message-bg;
+    color: $white;
   }
 }

@@ -22,6 +22,7 @@
       flex-wrap: wrap;
       text-overflow: ellipsis;
       word-break: break-all;
+      font-weight: 300;
       .message-block {
         @include flex-box(flex, row, center, unset);
         .message-user-img {
@@ -32,7 +33,6 @@
       .timestamp-block {
         width: 100%;
         text-align: right;
-        font-weight: 300;
         font-size: 0.6em;
         color: $chat-message-bg;
       }
