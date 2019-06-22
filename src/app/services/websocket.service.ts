@@ -61,10 +61,13 @@ export class WebSocketService {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
         let userIdArr = [this.userService.currentChatUser.id, this.userService.currentUser.id];
-        if (userIdArr.indexOf(message.from) > -1 &&
-            userIdArr.indexOf(message.to) > -1) {
-            this.realTimeMessageSubject.next(message);
-        }
+        this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
+            if (userIdArr.indexOf(message.from) > -1 &&
+                userIdArr.indexOf(message.to) > -1) {
+                this.realTimeMessageSubject.next(message);
+            }
+        };
+
     }
 
     /**

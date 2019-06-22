@@ -34,7 +34,7 @@ export class IndexedDBStorageService {
         this.initializeFn();
     }
 
-    async initializeFn() {
+    initializeFn() {
         let db = indexedDB.open(this.dbName);
         //On Success of connection
         db.onsuccess = (ev: any) => {
@@ -53,7 +53,6 @@ export class IndexedDBStorageService {
             });
             //Create index
             this.objectStore.createIndex(this.dbIndex, this.indexProp);
-            this.dbReadyStateEmit.next();
         }
 
     }
