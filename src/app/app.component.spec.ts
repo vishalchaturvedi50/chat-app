@@ -1,12 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { FriendsComponent } from './friends/friends.component';
+import { MessageviewerComponent } from './messageviewer/messageviewer.component';
+import { AppService } from './services/app.service';
+import { WebSocketService } from './services/websocket.service';
+import { IndexedDBStorageService } from './services/indexeddb.service';
+import { UserinfoComponent } from './userinfo/userinfo.component';
+import { FormsModule } from '@angular/forms';
+import { UserService } from './services/user.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        FriendsComponent,
+        MessageviewerComponent,
+        UserinfoComponent
       ],
+      imports: [FormsModule],
+      providers: [UserService, AppService, WebSocketService, IndexedDBStorageService]
     }).compileComponents();
   }));
 
@@ -20,12 +33,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('chat-app');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to chat-app!');
   });
 });

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserinfoComponent } from './userinfo.component';
+import { UserService } from '../services/user.service';
 
 describe('UserinfoComponent', () => {
   let component: UserinfoComponent;
@@ -8,9 +9,10 @@ describe('UserinfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserinfoComponent ]
+      declarations: [UserinfoComponent],
+      providers: [UserService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe('UserinfoComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create user info componenet', () => {
     expect(component).toBeTruthy();
   });
 });
