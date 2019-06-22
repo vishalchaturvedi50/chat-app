@@ -1,70 +1,81 @@
 @import "../../common";
 
 :host {
-  font-weight: 300;
   display: flex;
   flex-direction: column;
   flex: 1;
   position: relative;
   background: darkslategray;
-  div {
-    width: 100%;
-  }
-  form {
-    position: sticky;
-    bottom: 0;
-    background: $current-user-bg;
-    input {
-      font-size: 1.2em;
-      flex: 1;
-      background: $secondary-bg-color;
-      outline: none;
-      border: none;
-      border-bottom: 2px solid $current-user-bg;
-    }
-    /*     ::placeholder {
-      font-weight: 300;
-      color: whitesmoke;
-      font-size: 0.8em;
-    } */
-    button {
-      margin-left: 0.5em;
-      background: $chat-message-bg;
-      outline: none;
-      border: none;
-      color: white;
-      font-variant: all-petite-caps;
-    }
-  }
-  ul {
-    height: 100%;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
-    li > span {
-      padding: 0.5em;
-      display: inline-block;
-      border-radius: 2em;
+}
+
+.message-list {
+  height: 100%;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  .message-list-item {
+    display: flex;
+    > .message-container {
+      padding: 0.3em;
+      border-radius: 0.5em;
       margin: 1em;
-      max-width: 60%;
-      display: inline-flex;
+      max-width: 55%;
+      display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      width: auto;
+      text-overflow: ellipsis;
       word-break: break-all;
-      img {
-        max-height: 2em;
+      .message-block {
+        display: flex;
+        align-items: center;
+        img {
+          align-self: baseline;
+          max-height: 2em;
+        }
+      }
+      .timestamp-block {
+        width: 100%;
+        text-align: right;
+        font-weight: 300;
+        font-size: 0.6em;
+        color: grey;
       }
     }
-    li.span-right {
-      text-align: right;
-      > span {
-        background: #dcf8c6;
+    &.flex-right {
+      justify-content: flex-end;
+      > .message-container {
+        background: $chat-own-text;
       }
     }
-    li.span-left {
-      text-align: left;
-      > span {
-        background: whitesmoke;
+
+    &.flex-left {
+      justify-content: flex-start;
+      > .message-container {
+        background: $chat-reply;
       }
     }
+  }
+}
+
+.user-input-form {
+  position: sticky;
+  bottom: 0;
+  background: $current-user-bg;
+  .user-input {
+    font-size: 1.2em;
+    flex: 1;
+    background: $secondary-bg-color;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid $current-user-bg;
+  }
+  .user-input-submit {
+    margin-left: 0.5em;
+    background: $chat-message-bg;
+    outline: none;
+    border: none;
+    color: white;
+    font-variant: all-petite-caps;
   }
 }
