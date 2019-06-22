@@ -7,6 +7,9 @@
     [ngClass]="userService.currentChatUser.id==item.id?'user-list-item-active':''"
     *ngFor="let item of friendList;trackBy:trackFriendListFn">
     <img class="user-list-item-img" [src]="userService.getImagePathFn(item.id)" />
-    <h3>{{item.userName}}</h3>
+    <div class="user-list-item-details flex--col">
+      <h3>{{item.userName}}</h3>
+      <h6>{{item.labels}}</h6>
+    </div>
   </li>
 </ul>

@@ -18,6 +18,14 @@
     .user-list-item-img {
       max-height: $img-height-md;
     }
+    .user-list-item-details {
+      h3,
+      h5,
+      h6 {
+        margin: 0;
+        font-weight: 300;
+      }
+    }
   }
   .user-list-item:hover {
     background: $chat-message-bg-trans;
