@@ -1,9 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AppService } from './app.service';
-import { UserService } from './user.service';
-import { WebSocketService } from './websocket.service';
-import { userList, _chatEqualFn } from '../models/constant';
-import { WebSocketServiceMock, IndexedDBStorageServiceMock } from '../models/mocks';
+import { _chatEqualFn } from '../models/constant';
 import { IndexedDBStorageService } from './indexeddb.service';
 import { ChatMessage } from '../models/message';
 
