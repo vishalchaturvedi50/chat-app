@@ -2,6 +2,7 @@ $primary-color: #00bfa5;
 $secondary-bg-color: #f5fcff;
 $white: #eeeeee;
 $current-user-bg: #009688;
+$chat-message-bg: #2f4f4f;
 
 /* A mixing to generate few properties for flexbox */
 @mixin flex-box($flexDirection, $alignItems, $justifyContent) {

@@ -12,6 +12,6 @@
 
 <form class="u-p_pt-5 flex--row">
     <input class="u-p_pt-25" type="text" name="currentMessage" [(ngModel)]="currentMessage"
-        placeholder="Type your message here" />
+        placeholder="Type your message here" autocomplete="off" />
     <button type="submit" (click)="sendMessageFn()">Send message</button>
 </form>

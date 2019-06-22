@@ -13,6 +13,7 @@
   form {
     position: sticky;
     bottom: 0;
+    background: $current-user-bg;
     input {
       font-size: 1.2em;
       flex: 1;
@@ -21,8 +22,14 @@
       border: none;
       border-bottom: 2px solid $current-user-bg;
     }
+    /*     ::placeholder {
+      font-weight: 300;
+      color: whitesmoke;
+      font-size: 0.8em;
+    } */
     button {
-      background: $current-user-bg;
+      margin-left: 0.5em;
+      background: $chat-message-bg;
       outline: none;
       border: none;
       color: white;
@@ -42,6 +49,7 @@
       max-width: 60%;
       display: inline-flex;
       align-items: center;
+      word-break: break-all;
       img {
         max-height: 2em;
       }
