@@ -13,6 +13,8 @@
   list-style: none;
   height: 100%;
   padding: 0;
+  border-top: 0.5em solid $current-user-bg;
+  margin-top: 0;
   .message-list-item {
     > .message-container {
       border-radius: 0.5em;
