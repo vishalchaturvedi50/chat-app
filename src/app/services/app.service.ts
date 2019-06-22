@@ -13,8 +13,8 @@ export class AppService {
     /* Subject to send any real time messages */
     public realTimeMessageSubs: Subject<ChatMessage> = new Subject();
 
-    constructor(private webSocketService: WebSocketService,
-        private userService: UserService) {
+    constructor(public webSocketService: WebSocketService,
+        public userService: UserService) {
         /* SUBS to message list  and user changes */
         this.subscribeToIndexDbStateFn();
         this.subscribeToMessageListFn();
