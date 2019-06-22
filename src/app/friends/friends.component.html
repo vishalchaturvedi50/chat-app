@@ -1,14 +1,8 @@
-<app-userinfo [user]="userService.currentUser"></app-userinfo>
+<app-userinfo [user]="userService.currentUser" [showSelect]="true"></app-userinfo>
 
-<div>
-  <select (change)="changeInCurrentUserFn($event)">
-    <option *ngFor="let op of friendList" [value]="op.id">{{op.userName}}</option>
-  </select>
-</div>
-
-<ul (click)="onUserItemClickFn($event)">
-  <li [id]="'user'+item.id" *ngFor="let item of friendList">
-    <img [src]="userService.getImagePathFn(item.id)" />
+<ul class="user-list" (click)="onUserItemClickFn($event)">
+  <li class="user-list-item" [id]="'user'+item.id" *ngFor="let item of friendList">
+    <img  class="user-list-item-img" [src]="userService.getImagePathFn(item.id)" />
     <h3>{{item.userName}}</h3>
   </li>
 </ul>

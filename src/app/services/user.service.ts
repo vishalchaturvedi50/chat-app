@@ -48,7 +48,9 @@ export class UserService {
         }
     }
 
-
+    getFriendListFn() {
+        return userList.filter(x => x.id != this.currentUser.id);
+    }
 
     getImagePathFn(id: number) {
         return getimgPathFn(id);

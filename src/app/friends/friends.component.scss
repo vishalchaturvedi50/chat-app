@@ -1,24 +1,24 @@
+@import "../../common";
+
 :host {
-  display: flex;
-  flex-direction: column;
+  @include flex-box(flex, column, unset, unset);
 }
 
-ul {
+.user-list {
   margin: 0;
   padding: 0;
   list-style: none;
   overflow-y: auto;
   width: 100%;
-  li {
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-    img {
-      max-height: 4em;
+  .user-list-item {
+    @include flex-box(inline-flex, row, center, unset);
+    width: inherit;
+    .user-list-item-img {
+      max-height: $img-height-md;
     }
   }
-  li:hover {
-    background: white;
+  .user-list-item:hover {
+    background: $white;
     cursor: pointer;
   }
 }

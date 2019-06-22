@@ -1,12 +1,17 @@
 $primary-color: #00bfa5;
 $secondary-bg-color: #f5fcff;
-$white: #eeeeee;
+$white: #ffffff;
 $current-user-bg: #009688;
 $chat-message-bg: #2f4f4f;
 
+$img-height-lg: 5em;
+$img-height-md: 4em;
+
+$h3: 1.17em;
+
 /* A mixing to generate few properties for flexbox */
-@mixin flex-box($flexDirection, $alignItems, $justifyContent) {
-  display: flex;
+@mixin flex-box($display, $flexDirection, $alignItems, $justifyContent) {
+  display: $display;
   flex-direction: $flexDirection;
   align-items: $alignItems;
   justify-content: $justifyContent;

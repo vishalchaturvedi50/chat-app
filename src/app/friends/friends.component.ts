@@ -25,7 +25,7 @@ export class FriendsComponent implements OnInit {
   }
 
   initializeFriendListFn() {
-    this.friendList = userList.filter(x => x.id != this.userService.currentUser.id);
+    this.friendList = this.userService.getFriendListFn();
   }
 
   onUserItemClickFn(ev: any) {
@@ -33,9 +33,4 @@ export class FriendsComponent implements OnInit {
     let requiredUserId = requiredListItem.id.split("user")[1];
     this.userService.setCurrentChatUserFn(parseInt(requiredUserId));
   }
-
-  changeInCurrentUserFn(ev: any) {
-    this.userService.setCurrentUserFn(ev.target.value);
-  }
-
 }

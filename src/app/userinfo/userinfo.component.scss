@@ -1,21 +1,27 @@
 @import "./../../common";
 
-.current-user-info {
+.user-info {
   background: $current-user-bg;
-
-  img {
-    max-height: 5rem;
+  .user-info-img {
+    max-height: $img-height-lg;
   }
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    h3 {
+  .user-info-div {
+    @include flex-box(flex, column, unset, center);
+    .user-info-title,
+    .user-info-select,
+    .user-info-label {
       margin: 0;
       color: aliceblue;
     }
-    h5 {
-      margin: 0;
+    .user-info-select {
+      background: $current-user-bg;
+      border: none;
+      font-size: $h3;
+      &:focus {
+        outline: none;
+      }
+    }
+    .user-info-label {
       font-weight: 100;
       color: cornsilk;
       font-variant: all-petite-caps;
