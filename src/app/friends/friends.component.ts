@@ -33,4 +33,9 @@ export class FriendsComponent implements OnInit {
     let requiredUserId = requiredListItem.id.split("user")[1];
     this.userService.setCurrentChatUserFn(parseInt(requiredUserId));
   }
+
+  trackFriendListFn(index, item) {
+    if (item)
+      return item.id;
+  }
 }

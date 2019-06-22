@@ -1,8 +1,8 @@
 <app-userinfo [user]="userService.currentUser" [showSelect]="true"></app-userinfo>
 
 <ul class="user-list" (click)="onUserItemClickFn($event)">
-  <li class="user-list-item" [id]="'user'+item.id" *ngFor="let item of friendList">
-    <img  class="user-list-item-img" [src]="userService.getImagePathFn(item.id)" />
+  <li class="user-list-item" [id]="'user'+item.id" *ngFor="let item of friendList;trackBy:trackFriendListFn">
+    <img class="user-list-item-img" [src]="userService.getImagePathFn(item.id)" />
     <h3>{{item.userName}}</h3>
   </li>
 </ul>
