@@ -34,6 +34,7 @@ export class IndexedDBStorageService {
         this.initializeFn();
     }
 
+    /* Initialize DB */
     initializeFn() {
         let db = indexedDB.open(this.dbName);
         //On Success of connection

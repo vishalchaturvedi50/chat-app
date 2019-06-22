@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { WebSocketService } from './websocket.service';
-import { IndexedDBStorageService } from './indexeddb.service';
 import { ChatMessage } from '../models/message';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';

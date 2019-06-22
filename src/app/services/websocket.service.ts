@@ -47,6 +47,9 @@ export class WebSocketService {
      */
     sendMessageFn(message: ChatMessage) {
         this.socket.send(JSON.stringify(message));
+        /* 
+        If you are at the sender of the message then store the message in the indexed DB
+        */
         this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
             this.realTimeMessageSubject.next(message);
         };
@@ -54,16 +57,22 @@ export class WebSocketService {
     }
 
     /**
-     * Function when a message is received
+     * Function when a message is received on all the socket listening to the same socket uri
      * @param ev 
      */
     onMessageFn(ev: any) {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
         let userIdArr = [this.userService.currentChatUser.id, this.userService.currentUser.id];
+        /*Save the data irrespective of the intended receipeint.
+         We can further implement chat room 
+        capabilities (exculded for now).
+        */
         this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
+            //ONCe saved check if the message belongs to any of the two user involved
             if (userIdArr.indexOf(message.from) > -1 &&
                 userIdArr.indexOf(message.to) > -1) {
+                //if yes then send the mssages through realtimemessagesubject (incremental)
                 this.realTimeMessageSubject.next(message);
             }
         };
@@ -76,7 +85,7 @@ export class WebSocketService {
      */
     onErrorFn(ev: any) {
         console.log(ev);
-        this.connectFn();
+        setTimeout(() => { this.connectFn(); });
     }
 
     /**
