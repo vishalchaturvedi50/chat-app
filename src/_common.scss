@@ -8,6 +8,7 @@ $chat-reply: whitesmoke;
 
 $img-height-lg: 5em;
 $img-height-md: 4em;
+$img-heighgt-sm: 2em;
 
 $h3: 1.17em;
 
@@ -17,4 +18,9 @@ $h3: 1.17em;
   flex-direction: $flexDirection;
   align-items: $alignItems;
   justify-content: $justifyContent;
+}
+
+%no_outline_no_border {
+  outline: none;
+  border: none;
 }

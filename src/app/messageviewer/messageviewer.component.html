@@ -1,12 +1,15 @@
+<!-- SHow current chat user info -->
 <app-userinfo [user]="userService.currentChatUser"></app-userinfo>
 
 
+<!-- List of messages b/w currentchatuser and currentuser -->
 <ul class="message-list" #messageListElem>
-    <li class="message-list-item" *ngFor="let item of messageList; trackBy:trackMessageListFn"
+    <!-- Assign required classes based on the message from and to properties -->
+    <li class="message-list-item d-flex" *ngFor="let item of messageList; trackBy:trackMessageListFn"
         [ngClass]="item.from==userService.currentUser.id?'flex-right':'flex-left'">
-
-        <div class="message-container">
-            <span class="message-block"><img [src]="userService.getImagePathFn(item.from)" />
+        <!-- Message containern(show image, message and timestamp) -->
+        <div class="message-container u-m_1 u-p_pt-25">
+            <span class="message-block"><img class="message-user-img" [src]="userService.getImagePathFn(item.from)" />
                 <span> {{item.message}}</span> </span>
             <span class="timestamp-block">{{item.timeStamp | date:'shortTime'}}</span>
         </div>
@@ -14,9 +17,11 @@
     </li>
 </ul>
 
-
+<!-- Form with controls to send message -->
 <form class="u-p_pt-5 flex--row user-input-form">
+    <!-- Input type text for user to enter messages -->
     <input class="u-p_pt-25 user-input" type="text" name="currentMessage" [(ngModel)]="currentMessage"
         placeholder="Type your message here" autocomplete="off" />
+    <!-- Send button -->
     <button type="submit" class="user-input-submit" (click)="sendMessageFn()">Send message</button>
 </form>

@@ -5,33 +5,28 @@
   flex-direction: column;
   flex: 1;
   position: relative;
-  background: darkslategray;
+  background: $chat-message-bg;
 }
 
 .message-list {
-  height: 100%;
   overflow-y: auto;
   list-style: none;
+  height: 100%;
   padding: 0;
   .message-list-item {
-    display: flex;
     > .message-container {
-      padding: 0.3em;
       border-radius: 0.5em;
-      margin: 1em;
-      max-width: 55%;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
       width: auto;
+      max-width: 55%;
+      @include flex-box(flex, row, center, unset);
+      flex-wrap: wrap;
       text-overflow: ellipsis;
       word-break: break-all;
       .message-block {
-        display: flex;
-        align-items: center;
-        img {
+        @include flex-box(flex, row, center, unset);
+        .message-user-img {
           align-self: baseline;
-          max-height: 2em;
+          max-height: $img-heighgt-sm;
         }
       }
       .timestamp-block {
@@ -39,7 +34,7 @@
         text-align: right;
         font-weight: 300;
         font-size: 0.6em;
-        color: grey;
+        color: $chat-message-bg;
       }
     }
     &.flex-right {
@@ -66,16 +61,14 @@
     font-size: 1.2em;
     flex: 1;
     background: $secondary-bg-color;
-    outline: none;
-    border: none;
+    @extend %no_outline_no_border;
     border-bottom: 2px solid $current-user-bg;
   }
   .user-input-submit {
     margin-left: 0.5em;
     background: $chat-message-bg;
-    outline: none;
-    border: none;
-    color: white;
+    @extend %no_outline_no_border;
+    color: $white;
     font-variant: all-petite-caps;
   }
 }

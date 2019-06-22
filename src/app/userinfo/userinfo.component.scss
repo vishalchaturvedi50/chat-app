@@ -19,7 +19,7 @@
       font-size: $h3;
       border-bottom: 1px solid;
       &:focus {
-        outline: none;
+        @extend %no_outline_no_border;
       }
     }
     .user-info-label {
