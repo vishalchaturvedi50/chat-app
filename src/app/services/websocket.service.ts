@@ -3,11 +3,12 @@ import { ChatMessage } from '../models/message';
 import { IndexedDBStorageService } from './indexeddb.service';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';
+import { webSocketURi } from '../models/constant';
 @Injectable()
 export class WebSocketService {
 
     /* WEB SOCKET URL */
-    private webSocketUri: string = "wss://connect.websocket.in/web-chat-app-xyz12";
+    private webSocketUri: string = webSocketURi;
 
     //SOCKET variable
     private socket: WebSocket;

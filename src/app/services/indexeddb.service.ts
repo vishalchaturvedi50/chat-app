@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChatMessage } from '../models/message';
 import { resolve } from 'q';
 import { from, Subject } from 'rxjs';
+import { dbProperties } from '../models/constant';
 
 @Injectable({
     providedIn: "root"
@@ -11,9 +12,11 @@ export class IndexedDBStorageService {
     /**
      * INDEX DB Properties
      */
-    private dbName: string = "webChat";
-    private dbStoreName: string = "webChatStore";
-    private dbIndex: string = "userNameIndex";
+    private dbName: string = dbProperties.dbName;
+    private dbStoreName: string = dbProperties.dbStoreName;
+    private dbIndex: string = dbProperties.dbIndex;
+    private indexProp: string[] = dbProperties.indexProp;
+    private dbKeyPath: string = dbProperties.keyPath;
 
     //Database object
     private database: IDBDatabase;
@@ -46,10 +49,10 @@ export class IndexedDBStorageService {
             this.database = ev.target.result;
             //Create object store
             this.objectStore = this.database.createObjectStore(this.dbStoreName, {
-                keyPath: "id", autoIncrement: true
+                keyPath: this.dbKeyPath, autoIncrement: true
             });
             //Create index
-            this.objectStore.createIndex(this.dbIndex, ["from", "to"]);
+            this.objectStore.createIndex(this.dbIndex, this.indexProp);
             this.dbReadyStateEmit.next();
         }
 
