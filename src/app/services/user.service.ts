@@ -16,6 +16,7 @@ export class UserService {
     constructor() {
         this.currentUser = userList[0];
         this.currentChatUser = userList[1];
+        this.changeInUserSubs.next(UserChangeEnum.CurrentChatUser);
     }
 
     setCurrentChatUserFn(id: number) {

@@ -17,6 +17,7 @@
       background: $current-user-bg;
       border: none;
       font-size: $h3;
+      border-bottom: 1px solid;
       &:focus {
         outline: none;
       }

@@ -7,29 +7,30 @@ import { UserService } from './user.service';
 @Injectable()
 export class WebSocketService {
 
+    /* WEB SOCKET URL */
     private webSocketUri: string = "wss://connect.websocket.in/web-chat-app-xyz12";
 
+    //SOCKET variable
     private socket: WebSocket;
 
+    //Subject to send any realtime message
     public realTimeMessageSubject: Subject<ChatMessage> = new Subject();
 
     constructor(private indexedDbService: IndexedDBStorageService,
         private userService: UserService) {
+        //Connect Function
         this.connectFn();
-        this.socket.onopen = this.onConnectionOpenFn;
-        this.socket.onmessage = (ev) => {
-            this.onMessageFn(ev);
-        };
-        this.socket.onerror = this.onErrorFn;
-        this.socket.onclose = (ev) => {
-            this.onCloseFn(ev);
-        };
     }
 
 
     /* CONNECT TO SOCKET */
     connectFn() {
         this.socket = new WebSocket(this.webSocketUri);
+        //Assign functions for various state
+        this.socket.onopen = (ev) => { this.onConnectionOpenFn(ev); };
+        this.socket.onmessage = (ev) => { this.onMessageFn(ev); };
+        this.socket.onerror = (ev) => { this.onErrorFn(ev) };
+        this.socket.onclose = (ev) => { this.onCloseFn(ev); };
     }
 
     /**
@@ -60,8 +61,9 @@ export class WebSocketService {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
         if (message.from == this.userService.currentUser.id ||
-            message.to == this.userService.currentUser.id)
+            message.to == this.userService.currentUser.id) {
             this.realTimeMessageSubject.next(message);
+        }
     }
 
     /**
@@ -79,7 +81,9 @@ export class WebSocketService {
      */
     onCloseFn(ev: any) {
         console.log(ev);
-        this.connectFn();
+        setTimeout(() => {
+            this.connectFn();
+        });
     }
 
 

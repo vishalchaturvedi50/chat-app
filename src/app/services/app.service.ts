@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WebSocketService } from './websocket.service';
 import { IndexedDBStorageService } from './indexeddb.service';
-import { UserClass, UserChangeEnum } from '../models/user';
-import { userList, getimgPathFn } from '../models/constant';
 import { ChatMessage } from '../models/message';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';
@@ -10,27 +8,40 @@ import { UserService } from './user.service';
 @Injectable()
 export class AppService {
 
-
-
-
+    /* Subject to send all the saved message  */
     public currentMessageListSubs: Subject<Array<ChatMessage>> = new Subject();
 
+    /* Subject to send any real time messages */
     public realTimeMessageSubs: Subject<ChatMessage> = new Subject();
 
     constructor(private webSocketService: WebSocketService,
         private indexDBService: IndexedDBStorageService,
         private userService: UserService) {
-
+        /* SUBS to message list  and user changes */
+        this.subscribeToIndexDbStateFn();
         this.subscribeToMessageListFn();
         this.subscribeToUserChangeFn();
     }
 
-
+    /**
+     * Get message list for current user and current chat user
+     */
     getMessageListFn() {
-        this.indexDBService.retriveMessageByUserFn(this.userService.currentUser.id,
-            this.userService.currentChatUser.id);
+        this.indexDBService.retriveMessageByUserFn([this.userService.currentUser.id,
+        this.userService.currentChatUser.id]);
     }
 
+    /**
+     * Function to subscribe to ready state of DB
+     */
+    subscribeToIndexDbStateFn() {
+        this.indexDBService.dbReadyStateEmit.subscribe(resp => {
+            this.getMessageListFn();
+        })
+    }
+    /**
+     * Function with subscribtion to user message and real time messages
+     */
     subscribeToMessageListFn() {
         this.indexDBService.getUserMessagesSubject.subscribe((msgList: Array<ChatMessage>) => {
             this.currentMessageListSubs.next(msgList);
@@ -53,16 +64,15 @@ export class AppService {
         this.webSocketService.sendMessageFn(message);
     }
 
+    /**
+     * Subscribe to user change 
+     */
     subscribeToUserChangeFn() {
-        this.userService.changeInUserSubs.subscribe(resp => {
-            if (resp == UserChangeEnum.CurrentUser) {
-
-            }
-            else if (resp == UserChangeEnum.CurrentChatUser) {
-                this.getMessageListFn();
-            }
+        this.userService.changeInUserSubs.subscribe(() => {
+            //For any type of user change get an updated message list
+            this.getMessageListFn();
         })
-    }
+    };
 
 
 }

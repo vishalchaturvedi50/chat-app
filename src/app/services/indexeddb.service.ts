@@ -8,14 +8,23 @@ import { from, Subject } from 'rxjs';
 })
 export class IndexedDBStorageService {
 
+    /**
+     * INDEX DB Properties
+     */
     private dbName: string = "webChat";
     private dbStoreName: string = "webChatStore";
     private dbIndex: string = "userNameIndex";
 
+    //Database object
     private database: IDBDatabase;
 
+    //Object store object
     private objectStore: IDBObjectStore;
 
+    //SUBJECT to emit ready state of db
+    public dbReadyStateEmit: Subject<any> = new Subject<any>();
+
+    //Subject to emit user messages
     public getUserMessagesSubject: Subject<Array<ChatMessage>> = new Subject();
 
     constructor() {
@@ -23,26 +32,35 @@ export class IndexedDBStorageService {
     }
 
     async initializeFn() {
-        let db = await indexedDB.open(this.dbName);
+        let db = indexedDB.open(this.dbName);
+        //On Success of connection
         db.onsuccess = (ev: any) => {
-            console.log("SUCC")
             this.database = ev.target.result;
+            this.dbReadyStateEmit.next();
         }
+
+        //When DB is first time created the onupdateneeded is called
         db.onupgradeneeded = (ev: any) => {
             console.log("ON UPGRADE");
+            //Assign data base variable
             this.database = ev.target.result;
+            //Create object store
             this.objectStore = this.database.createObjectStore(this.dbStoreName, {
                 keyPath: "id", autoIncrement: true
             });
+            //Create index
             this.objectStore.createIndex(this.dbIndex, ["from", "to"]);
+            this.dbReadyStateEmit.next();
         }
+
     }
 
+    /**
+     * Function to get transaction over DBStore
+     */
     getTransactionFn() {
         return this.database.transaction(this.dbStoreName, "readwrite");
     }
-
-
 
     /**
      * Function to add data to storage
@@ -53,29 +71,52 @@ export class IndexedDBStorageService {
         return transaction.objectStore(this.dbStoreName).add(data);
     }
 
-    retriveMessageByUserFn(fromName: number, toName: number) {
+    /**
+     * Function to retrive message b/w two users
+     * @param userList - List of user id's
+     */
+    retriveMessageByUserFn(userList: Array<number> = []) {
+        //Get a transaction
         let transaction = this.getTransactionFn();
+        //Create  a variable to hold list of meesages
         let listOfMessages: Array<ChatMessage> = [];
+        //Get cursor
         let cursrc = transaction.objectStore(this.dbStoreName).openCursor();
+
+        //On Cursor success
         cursrc.onsuccess = (ev: any) => {
+            //each cursor item
             let cursor: IDBCursor = ev.target.result;
             if (cursor) {
                 let value: ChatMessage = (<any>cursor).value;
-                if ((value.from == fromName
-                    && value.to == toName) || (value.from == toName
-                        && value.to == fromName)) {
+
+                //Filter based on condition and push into array if condition is trye
+                if (userList.indexOf(value.from) > -1 &&
+                    userList.indexOf(value.to) > -1) {
                     listOfMessages.push(value);
                 }
+                //Continue to next cursor
                 cursor.continue();
             }
             else {
+                //Emit the messages
                 this.getUserMessagesSubject.next(listOfMessages);
+                //Abort the transaction
                 transaction.abort();
             }
         }
+
+        //ON ERROR SEND EMPTY MEssage LIST
+        cursrc.onerror = (ev: any) => {
+            this.getUserMessagesSubject.next(listOfMessages);
+        };
     }
 
 
+    /**
+     * Delete the messages 
+     * @param msgId  - Unique index message id
+     */
     deleteMessageFn(msgId: number) {
         this.getTransactionFn().objectStore(this.dbStoreName).delete(msgId);
     }
