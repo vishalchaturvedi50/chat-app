@@ -1,5 +1,6 @@
 import { UserClass } from './user';
 
+/* Constant friend/user list */
 export const userList: Array<UserClass> = [
     { id: 1, userName: "Vishal Chat", labels: "Drummer | JS Enthusiast" },
     { id: 2, userName: "John Anderson", labels: "Beer Brewing | Swimmer" },
@@ -13,10 +14,12 @@ export const userList: Array<UserClass> = [
     { id: 10, userName: "Daisy Raly", labels: "Golfing | Biker" }
 ];
 
+/* Function to get image path */
 export function getimgPathFn(id: number) {
     return `./assets/user-icon/${id}.svg`;
 };
 
+/* INDEXEDDB Properties */
 export const dbProperties = {
     dbName: "webChat",
     dbStoreName: "webChatStore",
@@ -24,5 +27,5 @@ export const dbProperties = {
     indexProp: ["from", "to"],
     keyPath: "id"
 }
-
+/* Websocket uri */
 export const webSocketURi = "wss://connect.websocket.in/web-chat-app-xyz12";

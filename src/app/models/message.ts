@@ -1,3 +1,7 @@
+
+/**
+ * Chat Message class
+ */
 export class ChatMessage {
     public from: number;
     public to: number;
