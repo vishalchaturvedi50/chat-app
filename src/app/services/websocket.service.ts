@@ -60,8 +60,9 @@ export class WebSocketService {
     onMessageFn(ev: any) {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
-        if (message.from == this.userService.currentUser.id ||
-            message.to == this.userService.currentUser.id) {
+        let userIdArr = [this.userService.currentChatUser.id, this.userService.currentUser.id];
+        if (userIdArr.indexOf(message.from) > -1 &&
+            userIdArr.indexOf(message.to) > -1) {
             this.realTimeMessageSubject.next(message);
         }
     }
