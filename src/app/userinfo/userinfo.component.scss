@@ -15,7 +15,7 @@
     }
     .user-info-select {
       background: $current-user-bg;
-      border: none;
+      @extend %no_outline_no_border;
       font-size: $h3;
       border-bottom: 1px solid;
       &:focus {
@@ -24,7 +24,7 @@
     }
     .user-info-label {
       font-weight: 100;
-      color: cornsilk;
+      color: $white;
       font-variant: all-petite-caps;
     }
   }

@@ -1,10 +1,11 @@
+<!-- A component to show case user info -->
 <div class="user-info flex--row">
   <img class="user-info-img" [src]="userService.getImagePathFn(user.id)" />
   <div class="user-info-div">
     <h3 class="user-info-title" *ngIf="!showSelect">{{user.userName}}</h3>
     <div *ngIf="showSelect">
       <select class="user-info-select" (change)="changeInCurrentUserFn($event)">
-        <option [selected]="op.id==userService.currentUser.id" *ngFor="let op of friendList" [value]="op.id">
+        <option [selected]="op.id==userService.currentUser.id" *ngFor="let op of userList" [value]="op.id">
           {{op.userName}}</option>
       </select>
     </div>

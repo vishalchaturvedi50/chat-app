@@ -11,20 +11,22 @@ import { userList } from '../models/constant';
 })
 export class UserinfoComponent implements OnInit {
 
-
+  /* Show select or not (it should be visisble for changing currentuser) */
   @Input() showSelect: boolean = false;
 
+  /* User : for which details has to be shown */
   @Input() user: UserClass = new UserClass();
 
-  public friendList: Array<UserClass> = [];
+  /* Friend list */
+  public userList: Array<UserClass> = userList;
 
   constructor(public userService: UserService) { }
 
   ngOnInit() {
-    this.friendList = userList;
+
   }
 
-
+  /*  Change in current user */
   changeInCurrentUserFn(ev: any) {
     this.userService.setCurrentUserFn(ev.target.value);
   }

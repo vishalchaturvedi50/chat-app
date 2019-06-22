@@ -85,7 +85,6 @@ export class WebSocketService {
      */
     onErrorFn(ev: any) {
         console.log(ev);
-        setTimeout(() => { this.connectFn(); });
     }
 
     /**
@@ -96,7 +95,7 @@ export class WebSocketService {
         console.log(ev);
         setTimeout(() => {
             this.connectFn();
-        });
+        }, 5000);
     }
 
 
