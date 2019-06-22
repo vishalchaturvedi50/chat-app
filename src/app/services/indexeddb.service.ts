@@ -115,6 +115,12 @@ export class IndexedDBStorageService {
         };
     }
 
+    /* Get record by id  */
+    getRecordByIdFn(id: number) {
+        //Get a transaction
+        let transaction = this.getTransactionFn();
+        return transaction.objectStore(this.dbStoreName).get(id);
+    }
 
     /**
      * Delete the messages 

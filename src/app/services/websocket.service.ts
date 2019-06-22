@@ -3,7 +3,7 @@ import { ChatMessage } from '../models/message';
 import { IndexedDBStorageService } from './indexeddb.service';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';
-import { webSocketURi } from '../models/constant';
+import { webSocketURi, _chatEqualFn } from '../models/constant';
 @Injectable()
 export class WebSocketService {
 
@@ -46,38 +46,70 @@ export class WebSocketService {
      * @param message : message which need to be send 
      */
     sendMessageFn(message: ChatMessage) {
-        this.socket.send(JSON.stringify(message));
         /* 
         If you are at the sender of the message then store the message in the indexed DB
         */
-        this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
-            this.realTimeMessageSubject.next(message);
+        this.indexedDbService.addDataToStorageFn(message).onsuccess = (ev) => {
+            console.log(ev);
+            message.id = (<any>ev.target).result; //Assign the id from the DB
+            this.socket.send(JSON.stringify(message)); //send the message through socket
+            this.validateAndEmitRealTimeMessageFn(message);
         };
 
     }
 
     /**
      * Function when a message is received on all the socket listening to the same socket uri
-     * @param ev 
+     * There can be two use cases in our POC
+     * 1. we are running two chat window side by side 
+     * 2. we are opening one in one browser and other in say mobile app 
+     * 
+     * To validate both the use case we have some edgecase implementation
+     * 1. As seen in above method of sendMessageFn - we first save date in DB and then send it across
+     * 2. If the user is opening the chat window side by side (in this case if we directly store data message will be repeated twice)
+     *      a. we will get message with same id 
+     *      b. With a custom implementation of compare object we will se if it is exactly same record (timestamp plays a major role here)
+     *      c. In case you are opening the app side by side the addNewRecord will be false and hence we will not add the record. 
+     *      d. In case you are opening on two different devices we will get addNewRecord as true. 
+     * @param ev : Message event
      */
     onMessageFn(ev: any) {
         console.log(ev.data);
         let message: ChatMessage = JSON.parse(ev.data);
-        let userIdArr = [this.userService.currentChatUser.id, this.userService.currentUser.id];
-        /*Save the data irrespective of the intended receipeint.
-         We can further implement chat room 
-        capabilities (exculded for now).
-        */
-        this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
-            //ONCe saved check if the message belongs to any of the two user involved
-            if (userIdArr.indexOf(message.from) > -1 &&
-                userIdArr.indexOf(message.to) > -1) {
-                //if yes then send the mssages through realtimemessagesubject (incremental)
-                this.realTimeMessageSubject.next(message);
-            }
-        };
 
+        //Check whether record with the same id exisist or not
+        this.indexedDbService.getRecordByIdFn(message.id).onsuccess = (ev) => {
+            //If 
+            let dbStoredRecord: ChatMessage = (<any>ev.target).result;
+            let addNewRecord = dbStoredRecord != undefined ? !_chatEqualFn(
+                JSON.parse(JSON.stringify(dbStoredRecord)), message) : true;
+
+            /* Add new record if the condition is true */
+            if (addNewRecord) {
+                this.indexedDbService.addDataToStorageFn(message).onsuccess = () => {
+                    this.validateAndEmitRealTimeMessageFn(message);
+                };
+            }
+            else
+                this.validateAndEmitRealTimeMessageFn(message);
+        }
     }
+
+
+    /**
+     * Validate message before sending
+     * @param message 
+     */
+    validateAndEmitRealTimeMessageFn(message: ChatMessage) {
+        let userIdArr = [this.userService.currentChatUser.id, this.userService.currentUser.id];
+        if (userIdArr.indexOf(message.from) > -1 &&
+            userIdArr.indexOf(message.to) > -1) {
+            //if yes then send the mssages through realtimemessagesubject (incremental)
+            this.realTimeMessageSubject.next(message);
+        }
+    }
+
+
 
     /**
      * Function being called when an error occurred
@@ -95,7 +127,7 @@ export class WebSocketService {
         console.log(ev);
         setTimeout(() => {
             this.connectFn();
-        }, 5000);
+        }, 2000);
     }
 
 

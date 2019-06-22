@@ -1,4 +1,5 @@
 import { UserClass } from './user';
+import { ChatMessage } from './message';
 
 /* Constant friend/user list */
 export const userList: Array<UserClass> = [
@@ -29,3 +30,23 @@ export const dbProperties = {
 }
 /* Websocket uri */
 export const webSocketURi = "wss://connect.websocket.in/web-chat-app-xyz12";
+
+
+export function _chatEqualFn(object1: ChatMessage, object2: ChatMessage) {
+    let isEqual = false;
+
+    let object1Keys = Object.keys(object1);
+    let object2Keys = Object.keys(object2);
+
+    if (object1Keys.length == object2Keys.length) {
+        let totalMatchValues = 0;
+        for (let key of Object.keys(object1)) {
+            if (object1[key] === object2[key])
+                totalMatchValues++;
+            else
+                break;
+        }
+        isEqual = totalMatchValues == object1Keys.length;
+    }
+    return isEqual;
+}
