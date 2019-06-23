@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class MessageviewerComponent implements OnInit, OnDestroy {
 
   /* A variable to hold all the subscribtion in component */
-  private subscribtionArr: Subscription[];
+  private subscribtionArr: Subscription[] = [];
 
   /* View child for ul element which shows all the messages */
   @ViewChild('messageListElem') messageListUlElement: ElementRef;

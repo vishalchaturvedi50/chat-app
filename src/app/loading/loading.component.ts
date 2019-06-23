@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class LoadingComponent implements OnInit, OnDestroy {
 
   /* A variable to hold all the subscribtion in component */
-  private subscribtionArr: Subscription[];
+  private subscribtionArr: Subscription[] = [];
 
   /* Show/Hide loading div based on web socket connection */
   public socketConnected: boolean = false;
