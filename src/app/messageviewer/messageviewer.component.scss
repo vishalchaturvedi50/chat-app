@@ -71,8 +71,11 @@
     background: $chat-message-bg;
     @extend %no_outline_no_border;
     color: $white;
-    font-variant: all-petite-caps;
     border-radius: 0.5em;
+    cursor: pointer;
+    &[disabled] {
+      background: $grey-shd-dark;
+    }
     img {
       transform: rotate(45deg);
       max-height: 2em;
