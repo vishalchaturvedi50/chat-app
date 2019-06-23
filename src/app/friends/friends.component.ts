@@ -32,8 +32,9 @@ export class FriendsComponent implements OnInit {
 
   /* WHEN a user is clicked from the list change current chat user */
   onUserItemClickFn(ev: any) {
+    let paths = ev.path || (event.composedPath && event.composedPath());
     //GET THE required li item from the chain
-    let requiredListItemArr = ev.path.filter(x => x.localName == "li");
+    let requiredListItemArr = paths.filter(x => x.localName == "li");
     //if we get the item
     if (requiredListItemArr.length > 0) {
       //split and get user id

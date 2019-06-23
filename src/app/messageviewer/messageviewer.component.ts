@@ -60,7 +60,7 @@ export class MessageviewerComponent implements OnInit {
   scrollToBottomFn() {
     setTimeout(() => {
       let element: HTMLElement = this.messageListUlElement.nativeElement; //Get the elment
-      element.scrollTo(element.scrollHeight, element.scrollHeight); //scroll it to element height
+      element.scrollTo(0, element.scrollHeight); //scroll it to element height
     })
   }
 
