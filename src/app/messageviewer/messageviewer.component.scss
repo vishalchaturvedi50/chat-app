@@ -13,7 +13,7 @@
   list-style: none;
   height: 100%;
   padding: 0;
-  border-top: 0.5em solid $current-user-bg;
+  /* border-top: 0.5em solid $current-user-bg; */
   margin-top: 0;
   .message-list-item {
     > .message-container {
@@ -72,5 +72,12 @@
     @extend %no_outline_no_border;
     color: $white;
     font-variant: all-petite-caps;
+    border-radius: 0.5em;
+    img {
+      transform: rotate(45deg);
+      max-height: 2em;
+      position: relative;
+      left: -2px;
+    }
   }
 }

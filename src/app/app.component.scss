@@ -1,19 +1,27 @@
 @import "../common";
 
-.parent-div {
+:host {
+  @include flex-box(flex, column, unset, unset);
   height: 100vh;
+}
+
+.parent-div {
+  height: inherit;
   overflow: hidden;
   position: relative;
-  width: 98%;
+  width: 100%;
   background-color: $secondary-bg-color;
 }
 
+app-userinfo {
+  width: 100%;
+}
+
 app-friends {
-  width: 20%;
+  max-width: 20%;
   height: 100%;
 }
 
 app-messageviewer {
-  width: 80%;
   height: 100%;
 }

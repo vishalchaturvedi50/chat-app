@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { WebSocketService } from './services/websocket.service';
 import { IndexedDBStorageService } from './services/indexeddb.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,5 @@ import { IndexedDBStorageService } from './services/indexeddb.service';
 })
 export class AppComponent {
   title = 'chat-app';
-  constructor() { }
+  constructor(public userService: UserService) { }
 }

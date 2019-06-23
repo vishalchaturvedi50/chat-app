@@ -1,6 +1,3 @@
-<!-- APP USer info component to show current user information -->
-<app-userinfo [user]="userService.currentUser" [showSelect]="true"></app-userinfo>
-
 <!-- Loop through each user to show case friend list -->
 <ul class="user-list" (click)="onUserItemClickFn($event)">
   <li class="user-list-item" [id]="'user'+item.id"

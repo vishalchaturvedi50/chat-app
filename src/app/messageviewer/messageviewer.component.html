@@ -23,5 +23,7 @@
     <input class="u-p_pt-25 user-input" type="text" name="currentMessage" [(ngModel)]="currentMessage"
         placeholder="Type your message here" autocomplete="off" />
     <!-- Send button -->
-    <button type="submit" class="user-input-submit" (click)="sendMessageFn()">Send message</button>
+    <button type="submit" class="user-input-submit" (click)="sendMessageFn()">
+        <img src="./assets/sendicon.png" />
+    </button>
 </form>
