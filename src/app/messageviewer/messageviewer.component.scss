@@ -61,10 +61,10 @@
   background: $current-user-bg;
   .user-input {
     font-size: 1.2em;
-    flex: 1;
     background: $secondary-bg-color;
     @extend %no_outline_no_border;
     border-bottom: 2px solid $current-user-bg;
+    width: 95%;
   }
   .user-input-submit {
     margin-left: 0.5em;

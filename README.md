@@ -1,27 +1,38 @@
+
 # ChatApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+  This project showcase implementation of a chat applications by allowing sending and receiving of messages between two user. It's a front-end only solution build with help of Web Socket and IndexedDB. 
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Demo
 
-## Code scaffolding
+Please visit [http://vishalchaturvedi50.github.io/chat-app/](http://vishalchaturvedi50.github.io/chat-app/) for a quick demo of application. The application can be tested in two ways. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ - Opening  the link side by side in same browser. 
+	 - Open the above link in two tabs of same browser. 
+	 - In tab 1 : choose current user as **Vishal Chat** and the friend as **John Anderson**. 
+	 - In tab 2: choose current user as **John Anderson** and the friend as **Vishal Chat**. 
+	 - You can now start sending and receiving messages between two tabs. 
+ 
+ - opening the link in two different places. 
+	 - Open the above link at two different devices (viz : one in chrome mobile other in chrome desktop). 
+	 - In desktop -  choose current user as **Vishal Chat** and the friend as **John Anderson**. 
+	 - In mobile -  choose current user as **John Anderson** and the friend as **Vishal Chat**. 
+	 - You can now start sending and receiving messages between two tabs.  
 
-## Build
+ 
+  
+## Implementation Details
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+1. The application is build on Angular framework with TypeScript, HTML5, SCSS and is a responsive application.  
+2.  The application uses IndexedDB to store the messages locally on user's device. 
+3. It also uses a free and open source web socket provided by websocket.in. 
+4. The friend list is currently hard coded for the purpose of POC. 
 
-## Running unit tests
+## Running the application
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  1. Prerequisite -  Have a latest version of npm installed. 
+  2. Clone the repository locally.
+  3. Run `npm install`  to install all the project dependency locally. 
+  4. Run `npm run-script start` to run the project on http://localhost:4200. 
+  5. Run `npm run-script test` to run the test cases. 
