@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserClass, UserChangeEnum } from '../models/user';
-import { userList } from '../models/constant';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
+
+  /* SUBSCRibtion objects */
+  private subsChangeInUser: Subscription;
 
   /* Friend list */
   public friendList: Array<UserClass> = [];
@@ -17,11 +20,12 @@ export class FriendsComponent implements OnInit {
 
   ngOnInit() {
     /* ON INIT SUBS. to user change and and initialize friend list accordingly */
-    this.userService.changeInUserSubs.subscribe(resp => {
+    this.subsChangeInUser = this.userService.changeInUserSubs.subscribe(resp => {
       if (resp == UserChangeEnum.CurrentUser) {
         this.getFriendListFn();
       }
     });
+
     this.getFriendListFn();
   }
 
@@ -48,5 +52,9 @@ export class FriendsComponent implements OnInit {
   trackFriendListFn(index, item) {
     if (item)
       return item.id;
+  }
+
+  ngOnDestroy(): void {
+    this.subsChangeInUser.unsubscribe();
   }
 }

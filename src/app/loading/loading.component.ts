@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebSocketService } from '../services/websocket.service';
 import { IndexedDBStorageService } from '../services/indexeddb.service';
 import { IDbReadyStateEnum } from '../models/indexedbstate';
 import { constantMessages } from '../models/constant';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',
   styleUrls: ['./loading.component.scss']
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnInit, OnDestroy {
+
+  /* A variable to hold all the subscribtion in component */
+  private subscribtionArr: Subscription[];
 
   /* Show/Hide loading div based on web socket connection */
   public socketConnected: boolean = false;
@@ -31,7 +35,7 @@ export class LoadingComponent implements OnInit {
     /* Check for current internet connection */
     this.internetConnection = window.navigator.onLine;
     /* Subscribe to websocket stauts */
-    this.webSocketService.webSocketStateSubject.subscribe(resp => {
+    let webSocketSubs = this.webSocketService.webSocketStateSubject.subscribe(resp => {
       if (resp == WebSocket.OPEN)
         this.socketConnected = true;
       else
@@ -39,9 +43,12 @@ export class LoadingComponent implements OnInit {
     });
 
     /* Subscribe to indexedDbService status */
-    this.indexedDbService.dbReadyStateEmit.subscribe(resp => {
+    let dbReadyStateSubs = this.indexedDbService.dbReadyStateEmit.subscribe(resp => {
       this.idBConnectionStatus = resp;
     });
+
+    this.subscribtionArr.push(webSocketSubs);
+    this.subscribtionArr.push(dbReadyStateSubs);
 
   }
 
@@ -71,6 +78,10 @@ export class LoadingComponent implements OnInit {
     else
       msg = constantMessages.offline; //If internet is not provided
     return msg;
+  }
+
+  ngOnDestroy(): void {
+    this.subscribtionArr.forEach(subs => subs.unsubscribe());
   }
 
 }

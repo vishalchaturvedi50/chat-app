@@ -1,14 +1,18 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { AppService } from '../services/app.service';
 import { ChatMessage } from '../models/message';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-messageviewer',
   templateUrl: './messageviewer.component.html',
   styleUrls: ['./messageviewer.component.scss']
 })
-export class MessageviewerComponent implements OnInit {
+export class MessageviewerComponent implements OnInit, OnDestroy {
+
+  /* A variable to hold all the subscribtion in component */
+  private subscribtionArr: Subscription[];
 
   /* View child for ul element which shows all the messages */
   @ViewChild('messageListElem') messageListUlElement: ElementRef;
@@ -32,16 +36,19 @@ export class MessageviewerComponent implements OnInit {
    */
   subscribeToMessageListFn() {
     /* A subscription to get all the previous message from the user */
-    this.appService.currentMessageListSubs.subscribe((msgList: Array<ChatMessage>) => {
+    let currentMessageListSubs = this.appService.currentMessageListSubs.subscribe((msgList: Array<ChatMessage>) => {
       this.messageList = msgList; //Assign it to meesage list
       this.scrollToBottomFn();//scroll to bottom
     });
 
     /*Subscribtion for real time message (incremental)  */
-    this.appService.realTimeMessageSubs.subscribe((msg: ChatMessage) => {
+    let realTimeMessageSubs = this.appService.realTimeMessageSubs.subscribe((msg: ChatMessage) => {
       this.messageList.push(msg); //push to message list
       this.scrollToBottomFn(); //scroll to bottom
     })
+
+    this.subscribtionArr.push(currentMessageListSubs);
+    this.subscribtionArr.push(realTimeMessageSubs);
   }
 
   /**
@@ -73,4 +80,9 @@ export class MessageviewerComponent implements OnInit {
     if (item)
       return item.id;
   }
+
+  ngOnDestroy(): void {
+    this.subscribtionArr.forEach(subs => subs.unsubscribe());
+  }
+
 }
