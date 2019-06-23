@@ -16,6 +16,9 @@ export class WebSocketService {
     //Subject to send any realtime message
     public realTimeMessageSubject: Subject<ChatMessage> = new Subject();
 
+    //Emitter of current state for websocket
+    public webSocketStateSubject: Subject<number> = new Subject();
+
     constructor(public indexedDbService: IndexedDBStorageService,
         private userService: UserService) {
         //Connect Function
@@ -39,6 +42,7 @@ export class WebSocketService {
      */
     onConnectionOpenFn(ev: Event): any {
         console.log(ev);
+        this.emitStateFn(this.socket.readyState);
     }
 
     /**
@@ -117,6 +121,7 @@ export class WebSocketService {
      */
     onErrorFn(ev: any) {
         console.log(ev);
+        this.emitStateFn(this.socket.readyState);
     }
 
     /**
@@ -128,7 +133,11 @@ export class WebSocketService {
         setTimeout(() => {
             this.connectFn();
         }, 2000);
+        this.emitStateFn(this.socket.readyState);
     }
 
+    emitStateFn(state: number) {
+        this.webSocketStateSubject.next(state);
+    }
 
 }
