@@ -9,13 +9,15 @@ import { IndexedDBStorageService } from './services/indexeddb.service';
 import { UserinfoComponent } from './userinfo/userinfo.component';
 import { FormsModule } from "@angular/forms";
 import { UserService } from './services/user.service';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FriendsComponent,
     MessageviewerComponent,
-    UserinfoComponent
+    UserinfoComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

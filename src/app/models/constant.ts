@@ -49,3 +49,10 @@ export function _chatEqualFn(object1: ChatMessage, object2: ChatMessage) {
     }
     return isEqual;
 }
+
+export const constantMessages = {
+    offline: `You went offline! Check your connectivity.`,
+    gettingConnected: `Searching the galaxy for you...`,
+    iDbConnectionWait: `Relax while we load you your memories...`,
+    pageReloadRequireed: `It's not you. It's us. Please reload.`
+}

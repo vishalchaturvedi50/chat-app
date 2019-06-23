@@ -1,0 +1,6 @@
+<div class="loading" *ngIf="!socketConnected || !internetConnection || idBConnectionStatus>0">
+  <img src="./assets/puff.svg" />
+  <h3 class="loading-title">
+    {{getMsgToDisplayFn()}}
+  </h3>
+</div>

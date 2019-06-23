@@ -3,6 +3,7 @@ import { WebSocketService } from './websocket.service';
 import { ChatMessage } from '../models/message';
 import { Subject } from 'rxjs';
 import { UserService } from './user.service';
+import { IDbReadyStateEnum } from '../models/indexedbstate';
 
 @Injectable()
 export class AppService {
@@ -35,8 +36,9 @@ export class AppService {
      */
     subscribeToIndexDbStateFn() {
         this.webSocketService.indexedDbService.
-            dbReadyStateEmit.subscribe(() => {
-                this.getMessageListFn();
+            dbReadyStateEmit.subscribe((res) => {
+                if (res == IDbReadyStateEnum.Ready)
+                    this.getMessageListFn();
             })
     }
     /**

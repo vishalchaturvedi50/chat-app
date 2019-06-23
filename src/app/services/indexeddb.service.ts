@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ChatMessage } from '../models/message';
-import { resolve } from 'q';
-import { from, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { dbProperties } from '../models/constant';
+import { IDbReadyStateEnum } from '../models/indexedbstate';
 
 @Injectable({
     providedIn: "root"
@@ -40,7 +40,11 @@ export class IndexedDBStorageService {
         //On Success of connection
         db.onsuccess = (ev: any) => {
             this.database = ev.target.result;
-            this.dbReadyStateEmit.next();
+            this.dbReadyStateEmit.next(IDbReadyStateEnum.Ready);
+        }
+
+        db.onerror = () => {
+            this.dbReadyStateEmit.next(IDbReadyStateEnum.Error);
         }
 
         //When DB is first time created the onupdateneeded is called
@@ -110,7 +114,7 @@ export class IndexedDBStorageService {
         }
 
         //ON ERROR SEND EMPTY MEssage LIST
-        cursrc.onerror = (ev: any) => {
+        cursrc.onerror = () => {
             this.getUserMessagesSubject.next(listOfMessages);
         };
     }

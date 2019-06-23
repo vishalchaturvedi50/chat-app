@@ -132,10 +132,11 @@ export class WebSocketService {
         console.log(ev);
         setTimeout(() => {
             this.connectFn();
-        }, 2000);
+        }, 1000);
         this.emitStateFn(this.socket.readyState);
     }
 
+    /* Function to emit the current state of websocket */
     emitStateFn(state: number) {
         this.webSocketStateSubject.next(state);
     }
