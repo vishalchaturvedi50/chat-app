@@ -28,7 +28,7 @@ export const dbProperties = {
     keyPath: "id"
 }
 /* Websocket uri */
-export const webSocketURi = "wss://connect.websocket.in/web-chat-app-xyz12";
+export const webSocketURi = "wss://connect.websocket.in/v3/99999999999999999999?apiKey=RpxHJwoUraof1EGm4tZQuak7g41LuJcgwjfEAGcyoN57VHLL1ANvrVhRs0dJ";
 
 
 export function _chatEqualFn(object1: ChatMessage, object2: ChatMessage) {
